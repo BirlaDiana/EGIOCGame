@@ -9,17 +9,21 @@ export default class MainScene extends Phaser.Scene {
   }
 
   preload() {
+    
     Player.preload(this);
     Enemy.preload(this);
     Resource.preload(this);
     this.load.image('tiles','assets/images/IceTileset.png');
     this.load.tilemapTiledJSON('map','assets/images/mapp.json');
+    
   }
 
   create(){
+    
     const map = this.make.tilemap({key: 'map'});
     this.map = map;
     const tileset = map.addTilesetImage('IceTileset','tiles',32,32,0,0);
+    
     const layer1 = map.createStaticLayer('Tile Layer 1',tileset,0,0);
     const layer2 = map.createStaticLayer('Tile Layer 1',tileset,0,0);
     layer1.setCollisionByProperty({collides:true});
@@ -40,6 +44,9 @@ export default class MainScene extends Phaser.Scene {
   update(){
     this.enemies.forEach(enemy => enemy.update());
     this.player.update();
+    const textInit=this.add.text(350,5,"Move: W-A-S-D\nAttack:Left-Click");
+   // textInit.setTint(0xff00ff, 0xffff00, 0x0000ff, 0xff0000);
+   textInit.setTint(0x000000);
     if (this.player.dead)
     {
       const text1 = this.add.text(100, 100, 'Game Over');
